@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Breadcrumb } from 'antd';
 import Link from 'next/link';
 import { Button, Checkbox, Form, Input, Divider, Tag } from 'antd';
 import bnbIcon from '../public/images/Binance-Coin-BNB-icon.png';
-import { Tabs, Table, Progress, Steps, Collapse } from 'antd';
+import { Tabs, Table, Progress, Steps, Collapse, Carousel } from 'antd';
 const { Step } = Steps;
 const { Panel } = Collapse;
 // const { Option } = Select;
@@ -23,11 +23,24 @@ import {
   FaFacebook,
   FaWhatsapp,
 } from 'react-icons/fa';
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import { FiCopy } from 'react-icons/fi';
 import { AiOutlineStar, AiOutlineLink } from 'react-icons/ai';
 import Image from 'next/image';
 
 const MainLayout = () => {
+  const ref = useRef();
+  const [activeTab, setActiveTab] = useState('buy');
+  const [showText, setShowText] = useState(false);
+  const contentStyle = {
+    margin: 0,
+    height: '160px',
+    color: '#c3333',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: 'red',
+  };
+
   const coinDetail = [
     { title: 'حجم بازار', price: '55,000 USDT' },
     { title: ' قیمت جهانی', price: '55,000 USDT' },
@@ -109,6 +122,7 @@ const MainLayout = () => {
       title: 'حجم ۲۴ ساعته',
       dataIndex: 'total',
       key: 3,
+      responsive: ['md'],
     },
     {
       title: 'عملیات',
@@ -120,6 +134,7 @@ const MainLayout = () => {
           معامله حرفه ای
         </Button>
       ),
+      responsive: ['md'],
     },
   ];
   const coinOrderItem = [
@@ -219,25 +234,24 @@ const MainLayout = () => {
       img: bnbIcon,
     },
   ];
-  const [activeTab, setActiveTab] = useState('buy');
-  const [showText, setShowText] = useState(false);
+
   return (
-    <section className="m-auto max-w-[1440px] my-[140-px] text-black py-[70px] ">
-      <div className=" grid grid-cols-12 gap-[30px]">
+    <section className="2xl:container md:container my-[140-px] text-black py-[70px] rtl ">
+      <div className=" grid grid-cols-1 md:grid-cols-12  grid-rows-12 md:gap-[30px]  gap-[8px]">
         {/* BreedCrumbLinks SideBar */}
-        {/* <section className=" col-start-1 col-span-2  #e57373 ">
-          {' '}
-          <Breadcrumb>
-            <Breadcrumb.Item>
-              {' '}
-              <Link href="/">همه رمز و ارز ها</Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link href="/">بایننس کوین</Link>
-            </Breadcrumb.Item>
-          </Breadcrumb>{' '}
-        </section> */}
-        <section className="col-start-1 col-span-2  bg-white  rounded-lg  w-[307px] 	 ">
+        {/* <section className="">
+            {' '}
+            <Breadcrumb>
+              <Breadcrumb.Item>
+                {' '}
+                <Link href="/">همه رمز و ارز ها</Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <Link href="/">بایننس کوین</Link>
+              </Breadcrumb.Item>
+            </Breadcrumb>{' '}
+          </section> */}
+        <section className="md:col-span-3 row-start-4 md:row-start-1 md:self-start col-start-1 bg-white md:rounded-lg">
           {' '}
           <Tabs
             className="w-100 "
@@ -346,122 +360,7 @@ const MainLayout = () => {
             </Tabs.TabPane>
           </Tabs>{' '}
         </section>
-        <div className=" bg-white col-start-4 col-span-9  rounded-lg shadow-xl  w-[900px] ">
-          <div className="flex flex-col justify-between h-[100%] ">
-            <div className="p-[25px]">
-              <div className="flex justify-between ">
-                <div className="flex flex-row items-center text-primary  ">
-                  <AiOutlineLink className="mr-[5px]" />
-                  <Link href="/">منابع</Link>
-                </div>
-                <div>
-                  <Tag className="text-[#7777]" color="#F7F7F7">
-                    ان اف تی
-                  </Tag>
-                  <Tag className="text-[#7777]" color="#F7F7F7">
-                    متاورس
-                  </Tag>
-                  <Tag className="text-[#CB9633]" color="#FEE59B">
-                    رتبه ۱۲
-                  </Tag>
-                </div>
-              </div>
-              <div className="grid grid-cols-10 py-[37px]">
-                <div className="col-span-4">
-                  <Image src={bnbChart} width={328} height={425} />
-                  <div className="flex my-[24px] w-[328px]">
-                    {WeeklyTag.map((i) => {
-                      return (
-                        <div className="flex flex-col items-center w-100% h-[47px] justify-between   gap-[10px]">
-                          <Tag
-                            className="text-black h-[24px] w-[59px] text-[#7777]"
-                            color="#F7F7F7"
-                          >
-                            {i.title}{' '}
-                          </Tag>
-                          <p className="text-primary">{i.Changes}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="col-span-6 pl-[24px]">
-                  <div className="flex flex-col justify-between h-[100%]">
-                    <div className="flex w-[100%] flex-row-reverse ">
-                      <div className="flex flex-row-reverse items-center items-center w-[100%] ">
-                        <Image
-                          src={bnbIcon}
-                          width={60}
-                          height={60}
-                          className="ml-[10px]"
-                        />
-                        <div className="mr-[5px]">
-                          <h1 className="text-[24px] font-bold">بایننس کوین</h1>
-                          <div className="flex flex-row-reverse my-[4px]">
-                            <h3 className="mx-[6px] text-gray">BNB</h3>
-                            <Tag className="bg-greenLight text-[#00CC66]">
-                              10.4%
-                            </Tag>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col  w-[100%]">
-                        <h3 className="text-gray text-[14px]">قیمت لحظه ای</h3>
-                        <h2 className="text-[20px]">
-                          <span className="text-gray mx-[2px] ">تومان</span>
-                          1,555,555,000
-                        </h2>
-                        <p className="text-gray text-[18px]">55,000تتر</p>
-                      </div>
-                    </div>
-                    <div className="flex-col my-[70px] flex">
-                      <Progress
-                        percent={70}
-                        strokeColor="#00CC66"
-                        showInfo={false}
-                      />
-                      <div className="flex felx-row justify-between">
-                        <div className="flex items-center flex-col">
-                          <p className="text-gray text-[12px]">
-                            پایین ترین قیمت ۲۴ ساعت
-                          </p>
-                          <h3>1,555,000,000 USDT</h3>
-                        </div>
-                        <div className="flex items-center flex-col">
-                          <p className="text-gray text-[12px]">
-                            بالاترین ترین قیمت ۲۴ ساعت
-                          </p>
-                          <h3>1,555,000,000 USDT</h3>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-row flex-wrap justify-end	 w-[480px] h-[144px] ">
-                      {coinDetail.map((i) => {
-                        return (
-                          <div className="flex flex-col w-[150px] items-end h-[51px] border-solid  border-l-[1px]  border-[#c7c7c7] mr-[10px] my-[5px]">
-                            <p className="text-gray"> {i.title} </p>
-                            <h2>{i.price}</h2>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="bg-[#EFEFF0] w-[900px] h-[102px] flex flex-row items-center justify-between p-[15px]">
-              {coinChanges.map((i) => {
-                return (
-                  <div className="flex flex-col w-[150px] items-end h-[51px] border-solid  border-l-[1px]  border-[#c7c7c7] mr-[10px] my-[10px]">
-                    <p className="text-gray text-[12px]"> {i.title} </p>
-                    <h2>{i.price}</h2>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        <section className=" bg-white col-start-1 col-span-2   rounded-xl flex flex-col  w-[307px] leading-[28px]	 p-[24px] gap-[24px] items-end ">
+        <section className="md:col-span-3 col-start-1 md:row-start-2 bg-white md:rounded-xl hidden md:flex flex-col leading-[28px]	p-[24px] gap-[24px] items-end ">
           {' '}
           <h2 className="font-normal	text-[16px] "> بازارهای معاملاتی</h2>
           <div className="max-h-[400px] overflow-auto ">
@@ -494,16 +393,7 @@ const MainLayout = () => {
             </div>
           </div>{' '}
         </section>
-        {/* CoinTable */}
-        <div className=" bg-white col-start-4 col-span-9 w-[900px] p-[24px]">
-          <Table
-            columns={columns}
-            dataSource={coinOrderItem}
-            pagination={false}
-          />
-        </div>
-        {/* Social */}
-        <div className=" text-gray5 flex justify-center col-start-1 col-end-3 row-start-6">
+        <section className="md:col-span-3 col-start-1  text-gray5 flex justify-center invisible md:visible">
           <FiCopy className="w-[27.76px] h-[27.76px]  p-[6px] t-[0] l-[0] mr-[10px] cursor-pointer text-[#3333]	" />
           {socialIcon.map((iconItem) => {
             return (
@@ -512,11 +402,168 @@ const MainLayout = () => {
               </Link>
             );
           })}
-        </div>
-        <section className="col-start-4 col-span-9 ">
-          <Image src={Video} width={900} />
         </section>
-        <div className="col-start-3 col-end-11  ">
+        <section className=" md:col-start-4 md:col-span-9 md:row-start-1 md:bg-white   md:row-span-2   md:rounded-lg md:shadow-xl  ">
+          <div className="flex flex-col justify-between h-[100%] ">
+            <div className="md:p-[25px]">
+              <div className=" justify-between hidden md:flex">
+                <div className="flex flex-row items-center text-primary  ">
+                  <AiOutlineLink className="mr-[5px]" />
+                  <Link href="/">منابع</Link>
+                </div>
+                <div>
+                  <Tag className="text-[#7777]" color="#F7F7F7">
+                    ان اف تی
+                  </Tag>
+                  <Tag className="text-[#7777]" color="#F7F7F7">
+                    متاورس
+                  </Tag>
+                  <Tag className="text-[#CB9633]" color="#FEE59B">
+                    رتبه ۱۲
+                  </Tag>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 grid-rows-1 gap-y-[8px] md:grid-cols-10 md:py-[37px]">
+                <div className="col-span-4 w-[100%] order-2  md:order-none bg-white md:m-[0] m-auto">
+                  <Image
+                    src={bnbChart}
+                    height={425}
+                    width="100%"
+                    className="m-auto"
+                  />
+                  <div className="flex my-[24px] w-[100%] justify-between">
+                    {WeeklyTag.map((i) => {
+                      return (
+                        <div className="flex flex-col items-center w-100% h-[47px] justify-between   gap-[10px]">
+                          <Tag
+                            className="text-black h-[24px] w-[59px] text-[#7777]"
+                            color="#F7F7F7"
+                          >
+                            {i.title}{' '}
+                          </Tag>
+                          <p className="text-primary">{i.Changes}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="col-span-6 order-1 md:order-none bg-white pl-[24px]">
+                  <div className="flex flex-col justify-between h-[100%]">
+                    <div className="flex w-[100%] flex-col h-[300px] md:h-[70px] justify-between p-[14px] items-end  md:p-[0] md:flex-row-reverse ">
+                      <div className="flex flex-row-reverse items-center justify-between items-center w-[100%] ">
+                        <div className="flex flex-row-reverse">
+                          <Image
+                            src={bnbIcon}
+                            className="ml-[10px] w-[28px] h-[28px]  md:w-[60px] md:h-[60px]"
+                          />
+                          <div className="mr-[5px]">
+                            <h1 className="text-[24px] font-bold">
+                              بایننس کوین
+                            </h1>
+                            <div className="flex flex-row-reverse my-[4px]">
+                              <h3 className="mx-[6px] text-gray">BNB</h3>
+                              <Tag className="hidden md:inline-block bg-greenLight text-[#00CC66]">
+                                10.4%
+                              </Tag>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex flex-row md:hidden">
+                          <FiCopy className="w-[27.76px] h-[27.76px]  p-[6px] t-[0] l-[0] mr-[10px] cursor-pointer text-[#3333]	" />
+                          {socialIcon.map((iconItem) => {
+                            return (
+                              <Link href={iconItem.href}>
+                                <iconItem.src className="w-[27.76px] h-[27.76px] bg-gray rounded-[50%] p-[6px] t-[0] l-[0] mr-[10px] cursor-pointer	" />
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div className="flex md:hidden">
+                        <Tag className="text-[#7777]" color="#F7F7F7">
+                          ان اف تی
+                        </Tag>
+                        <Tag className="text-[#7777]" color="#F7F7F7">
+                          متاورس
+                        </Tag>
+                        <Tag className="text-[#CB9633]" color="#FEE59B">
+                          رتبه ۱۲
+                        </Tag>
+                      </div>
+
+                      <div className="flex flex-col justify-center items-end w-[100%]">
+                        <h3 className="text-gray  text-[14px]">قیمت لحظه ای</h3>
+                        <div className="w-[100%] flex flex-row-reverse justify-between">
+                          <h2 className="text-[20px]">
+                            <span className="text-gray mx-[2px] ">تومان</span>
+                            1,555,555,000
+                          </h2>
+                          <Tag className="block p-[4px] md:hidden bg-greenLight text-[#00CC66]">
+                            10.4%
+                          </Tag>
+                        </div>
+                        <p className="text-gray text-[18px]">55,000تتر</p>
+                      </div>
+                    </div>
+                    <div className="flex-col my-[35px] md:my-[70px] flex">
+                      <Progress
+                        percent={70}
+                        strokeColor="#00CC66"
+                        showInfo={false}
+                      />
+                      <div className="flex felx-row justify-between">
+                        <div className="flex items-center flex-col">
+                          <p className="text-gray text-[12px]">
+                            پایین ترین قیمت ۲۴ ساعت
+                          </p>
+                          <h3>1,555,000,000 USDT</h3>
+                        </div>
+                        <div className="flex items-center flex-col">
+                          <p className="text-gray text-[12px]">
+                            بالاترین ترین قیمت ۲۴ ساعت
+                          </p>
+                          <h3>1,555,000,000 USDT</h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div className=" flex-row flex-wrap justify-end	 md:flex hidden h-[144px] ">
+                      {coinDetail.map((i) => {
+                        return (
+                          <div className="flex flex-col w-[150px] items-end h-[51px] border-solid  border-l-[1px]  border-[#c7c7c7] mr-[10px] my-[5px]">
+                            <p className="text-gray"> {i.title} </p>
+                            <h2>{i.price}</h2>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="md:bg-[#EFEFF0] bg-[#fff]  w-[100%] flex flex-col mt-[8px] md:mt-[0] md:flex-row items-center justify-between p-[15px]">
+              {coinChanges.map((i) => {
+                return (
+                  <div className="flex flex-row justify-between md:flex-col w-[100%] md:w-[150px]  items-end h-[51px] md:border-solid  md:border-l-[1px]  md:border-[#c7c7c7] mr-[10px] my-[10px]">
+                    <p className="text-gray text-[12px]"> {i.title} </p>
+                    <h2>{i.price}</h2>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+        <section className=" md:col-start-4 md:col-span-9 bg-white  md:rounded-lg   p-[24px]">
+          <Table
+            columns={columns}
+            dataSource={coinOrderItem}
+            pagination={false}
+          />
+        </section>
+        <section className="md:col-start-4 md:col-span-9 md:rounded-lg">
+          <Image src={Video} />
+        </section>
+        <section className=" md:col-start-4 md:col-span-9 md:rounded-lg p-[14px] ">
           <Steps labelPlacement="vertical">
             <Step
               title={
@@ -602,9 +649,8 @@ const MainLayout = () => {
               }
             />
           </Steps>
-        </div>
-
-        <section className="col-start-3 col-end-11 relative bg-white row-start-8 rounded-lg">
+        </section>
+        <section className="md:col-start-4 hidden md:block md:col-span-9 relative bg-white  md:rounded-lg">
           <div
             className={`p-[24px] overflow-hidden transition-[max-height] duration-[500ms]	 ${
               showText ? 'max-h-[1530px]' : 'max-h-[130px] '
@@ -643,7 +689,84 @@ const MainLayout = () => {
             </button>
           </div>
         </section>
-        <section className="col-start-3 col-end-11 row-start-9 bg-white rounded-lg">
+        <section className="md:col-start-4 md:col-span-9 gap-[10px] bg-white p-[24px]  md:hidden block  ">
+          <div className="flex flex-col">
+            <div className="flex flex-col items-end h-[100%] ">
+              <div className="flex flex-row-reverse  justify-between w-[100%]">
+                <p className="text-gray">معرفی</p>
+                <Link legacyBehavior className="text-primary" href="/">
+                  <div className="flex flex-row-reverse items-center cursor-pointer text-primary	">
+                    بیشتر
+                    <GrFormPrevious className="text-primary" />
+                  </div>
+                </Link>
+              </div>
+              <h2 className="text-[16px] font-bold mt-[24px] mb-[4px] leading-[24px]">
+                تتر چیست ؟
+              </h2>
+              <p className="font-[300]">
+                ...تتر یک ارز دیجیتال رمز نگاری شده در بستر بلاک چین است
+              </p>
+            </div>
+            <div className="flex flex-row-reverse items-center mt-[23px] ">
+              <GrFormNext
+                onClick={() => {
+                  ref.current.next();
+                }}
+              />
+              <div className=" w-[50%] ">
+                <Carousel
+                  ref={ref}
+                  autoplay
+                  slidesToShow={3}
+                  dotPosition="bottom"
+                  pauseOnHover={true}
+                  dots={false}
+                  draggable
+                >
+                  <div>
+                    <Tag
+                      className="text-[#CB9633] border-[1px] border-[#CB9633]"
+                      color="#FEE59B"
+                    >
+                      وایت پیپر{' '}
+                    </Tag>
+                  </div>
+                  <div>
+                    <Tag
+                      className="text-[#CB9633] border-[1px] border-[#CB9633]"
+                      color="#FEE59B"
+                    >
+                      نمودار قیمت
+                    </Tag>
+                  </div>
+                  <div>
+                    <Tag
+                      className="text-[#CB9633] border-[1px] border-[#CB9633]"
+                      color="#FEE59B"
+                    >
+                      وب سایت رسمی
+                    </Tag>
+                  </div>
+                  <div>
+                    <Tag
+                      className="text-[#CB9633] border-[1px] border-[#CB9633] ml-[5px]"
+                      color="#FEE59B"
+                    >
+                      صفحه اصلی
+                    </Tag>
+                  </div>
+                </Carousel>
+              </div>
+              <GrFormPrevious
+                onClick={() => {
+                  ref.current.next();
+                }}
+              />
+            </div>
+          </div>
+        </section>
+        <section className="md:col-start-4 md:col-span-9  bg-white md:rounded-lg">
           <div className="flex flex-col py-[32px] px-[24px]">
             <div className="mb-[48px]  text-end ">
                <h1 className="font-bold text-[20px]	">سوالات متداول</h1>
@@ -676,12 +799,11 @@ const MainLayout = () => {
             </Collapse>
           </div>
         </section>
-
-        <section className="col-start-3 col-end-11 row-start-10 ">
+        <section className="md:col-start-4 md:col-span-9">
           <div className="flex flex-col p-[24px] items-end">
             <h1 className="text-[20px] font-bold mb-[15px]">مقالات مرتبط</h1>
             <div className="flex flex-row-reverse my-[30px]">
-              <div className="ml-[20px]">
+              <div className="ml-[10px]">
                 <Image
                   src={ArticleSvg}
                   alt="article"
@@ -725,11 +847,7 @@ const MainLayout = () => {
       </div>
       <style jsx global>
         {`
-          {/* .parent {
-            display: grid;
-            grid-column-gap: 30px;
-            grid-row-gap: 29px;
-          } */}
+    
           .ant-tabs-rtl .ant-tabs-nav .ant-tabs-tab {
             margin: 0px 0 0 0px;
           }
@@ -796,6 +914,7 @@ const MainLayout = () => {
             position: absolute;
             background: #fecb38;
             pointer-events: none;
+            width:50%!important;
           }
 
           .ant-tabs > .ant-tabs-nav,
@@ -829,7 +948,7 @@ const MainLayout = () => {
             padding: 5px 10px;
             border-radius: 6px;
             gap: 10px;
-            width: 275px;
+            width: 100%;
             height: 40px;
           }
           .ant-input {
@@ -909,12 +1028,12 @@ const MainLayout = () => {
           //Steps 
           .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-tail::after {
             background-color: #ffffff;
-    width: 400px;
+    width: 100%;
     height: 4px;
     border-radius: 20px;          }
           .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-tail::after {
     background-color: #ffffff;
-    width: 355px;
+    width: 100%;
     height: 4px;
     border-radius: 20px;
 }
@@ -936,6 +1055,16 @@ const MainLayout = () => {
     line-height: 28px;
 
 }
+
+.ant-tag.ant-tag-rtl {
+
+    text-align: center;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  flex-direction:row-reverse
+}
+
 `}
       </style>
     </section>

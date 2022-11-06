@@ -29,7 +29,10 @@ module.exports = {
       gridTemplateRows: {
         // Simple 8 row grid
         7: 'repeat(7,  1fr)',
-        13: 'repeat(12,  1fr)',
+        16: 'repeat(16, minmax(0, 1fr))',
+      },
+      container: {
+        center: true,
       },
       gridRowStart: {
         8: '8',
@@ -41,8 +44,8 @@ module.exports = {
       },
       transitionProperty: {
         'max-height': 'max-height',
-        'spacing': 'margin, padding',
-      }
+        spacing: 'margin, padding',
+      },
     },
     plugins: [],
   },

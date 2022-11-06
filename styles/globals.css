@@ -90,3 +90,6 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+.rtl {
+  text-align: right;
+}
